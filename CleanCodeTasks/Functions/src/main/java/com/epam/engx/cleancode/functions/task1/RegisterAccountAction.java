@@ -13,32 +13,33 @@ public class RegisterAccountAction {
 
     private PasswordChecker passwordChecker;
     private AccountManager accountManager;
-
-    public void accountRegister(Account account) {
+    public List<Address> addAddresses(Account account)
+    {
+    	 List<Address> addresses = new ArrayList<Address>();
+         addresses.add(account.getHomeAddress());
+         addresses.add(account.getWorkAddress());
+         addresses.add(account.getAdditionalAddress());
+         return addresses;
+    }
+    
+    public void register(Account account) {
         if (account.getName().length() <= 5){
             throw new WrongAccountNameException();
         }
         String password = account.getPassword();
-        if (password.length() <= 8) {
-            if (passwordChecker.validate(password) != OK) {
+       
+            if (passwordChecker.validate(password) != OK && password.length() <= 8) {
                 throw new WrongPasswordException();
             }
-        }
+   
 
         account.setCreatedDate(new Date());
-        List<Address> addresses = addAddresses(account);
+        List<Address> addresses= addAddresses(account);
         account.setAddresses(addresses);
         accountManager.createNewAccount(account);
     }
 
-    public List<Address> addAddresses(Account account){
-    	List<Address> addresses = new ArrayList<Address>();
-        addresses.add(account.getHomeAddress());
-        addresses.add(account.getWorkAddress());
-        addresses.add(account.getAdditionalAddress());
-    	return addresses;
-    }
-    
+
     public void setAccountManager(AccountManager accountManager) {
         this.accountManager = accountManager;
     }

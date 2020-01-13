@@ -8,15 +8,19 @@ import java.util.List;
 public class Order {
 
     private List<Product> products;
-
-    public Double getPriceOfAvailableProducts() {
-        double orderPrice = 0.0;
-        Iterator<Product> iterator = products.iterator();
+    
+    public void removeUnAvailableProducts(){
+    	Iterator<Product> iterator = products.iterator();
         while (iterator.hasNext()) {
             Product p = iterator.next();
             if (!p.isAvailable())
                 iterator.remove();
         }
+    }
+
+    public Double getPriceOfAvailableProducts() {
+        double orderPrice = 0.0;
+        
         for (Product p : products)
             orderPrice += p.getProductPrice();
         return orderPrice;
