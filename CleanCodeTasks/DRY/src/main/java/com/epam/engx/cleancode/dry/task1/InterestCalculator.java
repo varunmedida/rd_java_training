@@ -38,17 +38,17 @@ public class InterestCalculator {
 
 	private BigDecimal interest(AccountDetails accountDetails) {
 		double interest = 0;
-
-		if (AGE <= accountDetails.getAge()) {
-			// interest = (PrincipalAmount * DurationInYears * AnnualInterestRate) / 100
-			interest = accountDetails.getBalance().doubleValue()
-					* durationBetweenDatesInYears(accountDetails.getStartDate(), new Date()) * SENIOR_PERCENT / 100;
-		} else {
-			interest = accountDetails.getBalance().doubleValue()
-					* durationBetweenDatesInYears(accountDetails.getStartDate(), new Date()) * INTEREST_PERCENT / 100;
-		}
-
+			if (AGE <= accountDetails.getAge()) {
+				interest = calculateInterestBasedOnAge(accountDetails, SENIOR_PERCENT);
+			} else {
+				interest = calculateInterestBasedOnAge(accountDetails, INTEREST_PERCENT);
+			}
 		return BigDecimal.valueOf(interest);
 	}
 
+	private double calculateInterestBasedOnAge(AccountDetails accountDetails, double percent) {
+		double interest = accountDetails.getBalance().doubleValue()
+				* durationBetweenDatesInYears(accountDetails.getStartDate(), new Date()) * percent / 100;
+		return interest;
+	}
 }

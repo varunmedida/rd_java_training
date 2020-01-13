@@ -1,9 +1,9 @@
 # Practical task repository for Functions
 
-
 ## Task Completed
 
-## All Tasks
 ```
-* Made changes such as defining readable names according to the functionality of the methods, splitting them into smaller code. 
+* Code violations have been found and corrected according to the clean code principles for functions such as limiting the 
+no of parameters, limiting the functionality of function to one, giving proper naming conventions.
 ```
+

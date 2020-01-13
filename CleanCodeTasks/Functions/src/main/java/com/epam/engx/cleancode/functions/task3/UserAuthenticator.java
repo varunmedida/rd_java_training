@@ -6,19 +6,15 @@ import com.epam.engx.cleancode.functions.task3.thirdpartyjar.UserService;
 
 public abstract class UserAuthenticator implements UserService {
 
-    private SessionManager sessionManager;
+	private SessionManager sessionManager;
 
-    public User login(String userName, String password) {
-        return loginUserSetSession(getUserByName(userName), password);
-    }
-
-    private User loginUserSetSession(User user, String password) {
-        if (isPasswordCorrect(user, password)) {
-            sessionManager.setCurrentUser(user);
-            return user;
-        }
-        return null;
-    }
-
+	public User loginUserAndSessionManager(String userName, String password) {
+		User user = getUserByName(userName);
+		if (isPasswordCorrect(user, password)) {
+			sessionManager.setCurrentUser(user);
+			return user;
+		}
+		return null;
+	}
 
 }

@@ -12,21 +12,17 @@ public class User {
     private String userId;
     private Address defaultAddress;
 
-    public Address giveException() throws SQLException {
-         return addressDao.getHomeAddress(userId);
-    }
-
     public Address getPreferredAddress() {
         try {
             List<Address> deliveryAddresses = addressDao.getDeliveryAddresses(userId);
             List<Address> orderAddresses = orderDao.getOrderAddresses(userId);
             if (!deliveryAddresses.isEmpty())
                 return deliveryAddresses.get(0);
-            else if(!orderAddresses.isEmpty())
+            else if (!orderAddresses.isEmpty())
                 return orderAddresses.get(orderAddresses.size() - 1);
-           return giveException();
-        } 
-        catch (SQLException e) {
+            else
+                return addressDao.getHomeAddress(userId);
+        } catch (SQLException e) {
             return defaultAddress;
         }
     }
