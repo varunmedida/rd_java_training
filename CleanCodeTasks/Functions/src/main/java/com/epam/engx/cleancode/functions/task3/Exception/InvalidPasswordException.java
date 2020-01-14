@@ -1,4 +1,4 @@
-package com.epam.engx.cleancode.functions.task3.exception;
+package com.epam.engx.cleancode.functions.task3.Exception;
 
 public class InvalidPasswordException extends RuntimeException{
 

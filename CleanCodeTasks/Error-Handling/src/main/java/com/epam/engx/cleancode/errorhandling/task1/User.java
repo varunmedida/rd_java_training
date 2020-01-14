@@ -14,17 +14,21 @@ public class User {
 
     public Address getPreferredAddress() {
         try {
-            List<Address> deliveryAddresses = addressDao.getDeliveryAddresses(userId);
-            List<Address> orderAddresses = orderDao.getOrderAddresses(userId);
-            if (!deliveryAddresses.isEmpty())
-                return deliveryAddresses.get(0);
-            else if (!orderAddresses.isEmpty())
-                return orderAddresses.get(orderAddresses.size() - 1);
-            else
-                return addressDao.getHomeAddress(userId);
+           return tryToGetPreferredAddress();
         } catch (SQLException e) {
             return defaultAddress;
         }
+    }
+    
+    public Address tryToGetPreferredAddress() throws SQLException {
+    	 List<Address> deliveryAddresses = addressDao.getDeliveryAddresses(userId);
+         List<Address> orderAddresses = orderDao.getOrderAddresses(userId);
+         if (!deliveryAddresses.isEmpty())
+             return deliveryAddresses.get(0);
+         else if (!orderAddresses.isEmpty())
+             return orderAddresses.get(orderAddresses.size() - 1);
+         else
+             return addressDao.getHomeAddress(userId);
     }
 
     public void setAddressDao(AddressDao addressDao) {
