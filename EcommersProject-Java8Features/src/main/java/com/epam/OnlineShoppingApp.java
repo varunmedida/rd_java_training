@@ -70,9 +70,9 @@ public class OnlineShoppingApp {
 		} else {
 			System.out.println("\nCart:");
 			System.out.println("\nProducts");
-			System.out.println("-----------------------------------");
+			System.out.println("--------------------------------------");
 			forPrinting(cartList, (Object cartProduct) -> System.out.println(cartProduct));
-			System.out.println("-----------------------------------");
+			System.out.println("--------------------------------------");
 			double totalAmount = service.calculateTotalPrice(cartList);
 			System.out.println("TOTAL AMOUNT:\t" + totalAmount);
 			System.out.println("WOULD YOU LIKE TO CHECKOUT?(y/n)");
@@ -95,9 +95,9 @@ public class OnlineShoppingApp {
 		} else {
 			System.out.println("\nCart:");
 			System.out.println("\nProducts");
-			System.out.println("-----------------------------------");
+			System.out.println("--------------------------------------");
 			forPrinting(cartList, (Object cartProduct) -> System.out.println(cartProduct));
-			System.out.println("-----------------------------------");
+			System.out.println("--------------------------------------");
 			System.out.print("Enter product id to be removed:");
 			int productId = sc.nextInt();
 			service.removeProductFromCart(productId);
@@ -133,7 +133,7 @@ public class OnlineShoppingApp {
 		// TODO Auto-generated method stub
 		ArrayList<SubCategory> subCategoryList = service.displaySubCategoriesBasedOnCategory(categoryOption);
 		if (subCategoryList.isEmpty()) {
-			System.err.println("\nIncorrect option.");
+			System.err.println("\nNo Sub Categories and products in this option yet!");
 			displayAllCategories();
 		} else {
 			System.out.println("\nSub-Categories");
