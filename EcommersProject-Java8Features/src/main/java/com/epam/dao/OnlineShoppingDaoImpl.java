@@ -17,7 +17,7 @@ public class OnlineShoppingDaoImpl implements OnlineShoppingDao {
 	ArrayList<Cart> cartList = new ArrayList<>();
 
 	public OnlineShoppingDaoImpl() {
-		// TODO Auto-generated constructor stub
+
 		categoryList.add(new Category(1, "Electronics"));
 		categoryList.add(new Category(2, "Fashion"));
 		subCategoryList.add(new SubCategory(1, 1, "Mobiles"));
@@ -33,29 +33,27 @@ public class OnlineShoppingDaoImpl implements OnlineShoppingDao {
 
 	@Override
 	public ArrayList<Category> getAllCategories() {
-		// TODO Auto-generated method stub
+
 		return categoryList;
 	}
 
 	@Override
 	public ArrayList<SubCategory> displaySubCategoriesBasedOnCategory(int categoryOption) {
-		// TODO Auto-generated method stub
-		ArrayList<SubCategory> filteredList = (ArrayList<SubCategory>) subCategoryList.stream()
+
+		return (ArrayList<SubCategory>) subCategoryList.stream()
 				.filter(subCategory -> subCategory.getCategoryId() == categoryOption).collect(Collectors.toList());
-		return filteredList;
 	}
 
 	@Override
 	public ArrayList<Product> diplayProductsBasedOnSubCategory(int subCategoryOption) {
-		// TODO Auto-generated method stub
-		ArrayList<Product> filteredList = (ArrayList<Product>) productList.stream()
+
+		return (ArrayList<Product>) productList.stream()
 				.filter(product -> product.getSubCategoryId() == subCategoryOption).collect(Collectors.toList());
-		return filteredList;
 	}
 
 	@Override
 	public void addProductToCart(int subCategoryOption, int productOption, int quantityToAdd) {
-		// TODO Auto-generated method stub
+
 		Product productToCart = productList.stream().filter(
 				product -> product.getProductId() == productOption && product.getSubCategoryId() == subCategoryOption)
 				.findAny().orElse(null);
@@ -75,7 +73,7 @@ public class OnlineShoppingDaoImpl implements OnlineShoppingDao {
 	}
 
 	private void notPresentInCart(Product productToCart, int quantityToAdd) {
-		// TODO Auto-generated method stub
+
 		if (quantityToAdd <= productToCart.getQuantityInStock()) {
 			cartList.add(new Cart(productToCart.getProductId(), productToCart.getProductName(),
 					productToCart.getProductPrice(), quantityToAdd));
@@ -86,7 +84,7 @@ public class OnlineShoppingDaoImpl implements OnlineShoppingDao {
 	}
 
 	private void alreadyPresentInCart(Cart productPresentInCart, Product productToCart, int quantityToAdd) {
-		// TODO Auto-generated method stub
+
 		if (productPresentInCart.getQuantityAdded() + quantityToAdd <= productToCart.getQuantityInStock()) {
 			productPresentInCart.setQuantityAdded(quantityToAdd + productPresentInCart.getQuantityAdded());
 			System.out.println("Product already present. Increased quantity.");
@@ -97,13 +95,13 @@ public class OnlineShoppingDaoImpl implements OnlineShoppingDao {
 
 	@Override
 	public ArrayList<Cart> viewCart() {
-		// TODO Auto-generated method stub
+
 		return cartList;
 	}
 
 	@Override
 	public void removeProductFromCart(int productId) {
-		// TODO Auto-generated method stub
+
 		Cart productToBeRemoved = cartList.stream().filter(cart -> cart.getProductId() == productId).findAny()
 				.orElse(null);
 		Optional<Cart> cartOptional = Optional.ofNullable(productToBeRemoved);
@@ -117,14 +115,15 @@ public class OnlineShoppingDaoImpl implements OnlineShoppingDao {
 
 	@Override
 	public void updateInventoryStock(ArrayList<Cart> cartList) {
-		// TODO Auto-generated method stub
 
 		for (Cart product : cartList) {
 			int productId = product.getProductId();
 			int quantityPurchased = product.getQuantityAdded();
 			Product productStockChange = productList.stream().filter(cart -> cart.getProductId() == productId).findAny()
 					.orElse(null);
-			productStockChange.setQuantityInStock(productStockChange.getQuantityInStock() - quantityPurchased);
+			Optional<Product> productOptional=Optional.ofNullable(productStockChange);
+			if(productOptional.isPresent()) {
+			productStockChange.setQuantityInStock(productStockChange.getQuantityInStock() - quantityPurchased);}
 		}
 	}
 
