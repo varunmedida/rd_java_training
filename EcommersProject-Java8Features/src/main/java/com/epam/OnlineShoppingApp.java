@@ -3,7 +3,6 @@ package com.epam;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-import java.util.function.Consumer;
 
 import com.epam.model.Cart;
 import com.epam.model.Category;
@@ -15,11 +14,12 @@ import com.epam.service.OnlineShoppingServiceImpl;
 public class OnlineShoppingApp {
 	static Scanner sc = new Scanner(System.in);
 	static OnlineShoppingService service = new OnlineShoppingServiceImpl();
+	private static final String LINE = "--------------------------------------";
 
-	public static void main(String args[]) {
-		System.out.println("-----------------------------------------");
+	public static void main(String[] args) {
+		System.out.println(LINE);
 		System.out.println("|	Welcome to EPAMER's Store	|");
-		System.out.println("-----------------------------------------");
+		System.out.println(LINE);
 		boolean continueShopping = true;
 		do {
 			System.out.println("\nWhat would you like to do?");
@@ -62,7 +62,6 @@ public class OnlineShoppingApp {
 	}
 
 	private static boolean checkout() {
-		// TODO Auto-generated method stub
 		boolean checkedOut = false;
 		ArrayList<Cart> cartList = service.viewCart();
 		if (cartList.isEmpty()) {
@@ -70,9 +69,9 @@ public class OnlineShoppingApp {
 		} else {
 			System.out.println("\nCart:");
 			System.out.println("\nProducts");
-			System.out.println("--------------------------------------");
-			forPrinting(cartList, (Object cartProduct) -> System.out.println(cartProduct));
-			System.out.println("--------------------------------------");
+			System.out.println(LINE);
+			cartList.stream().forEach(System.out::println);
+			System.out.println(LINE);
 			double totalAmount = service.calculateTotalPrice(cartList);
 			System.out.println("TOTAL AMOUNT:\t" + totalAmount);
 			System.out.println("WOULD YOU LIKE TO CHECKOUT?(y/n)");
@@ -88,16 +87,14 @@ public class OnlineShoppingApp {
 	}
 
 	private static void removeProductFromCart() {
-		// TODO Auto-generated method stub
 		ArrayList<Cart> cartList = service.viewCart();
 		if (cartList.isEmpty()) {
 			System.err.println("\nNo Products to remove from cart as cart is empty");
 		} else {
-			System.out.println("\nCart:");
-			System.out.println("\nProducts");
-			System.out.println("--------------------------------------");
-			forPrinting(cartList, (Object cartProduct) -> System.out.println(cartProduct));
-			System.out.println("--------------------------------------");
+			System.out.println("\nCart Products:");
+			System.out.println(LINE);
+			cartList.stream().forEach(System.out::println);
+			System.out.println(LINE);
 			System.out.print("Enter product id to be removed:");
 			int productId = sc.nextInt();
 			service.removeProductFromCart(productId);
@@ -105,32 +102,29 @@ public class OnlineShoppingApp {
 	}
 
 	private static void viewCart() {
-		// TODO Auto-generated method stub
 		ArrayList<Cart> cartList = service.viewCart();
 		if (cartList.isEmpty()) {
 			System.err.println("\nNo Products in cart");
 		} else {
 			System.out.println("\nCart:");
 			System.out.println("\nProducts");
-			System.out.println("-----------------------------------");
-			forPrinting(cartList, (Object cartProduct) -> System.out.println(cartProduct));
-			System.out.println("-----------------------------------");
+			System.out.println(LINE);
+			cartList.stream().forEach(System.out::println);
+			System.out.println(LINE);
 		}
 	}
 
 	private static void displayAllCategories() {
-		// TODO Auto-generated method stub
 		ArrayList<Category> categoryList = service.getAllCategories();
 		System.out.println("\nCategories");
 		System.out.println("-----------");
-		forPrinting(categoryList, (Object category) -> System.out.println(category));
+		categoryList.stream().forEach(System.out::println);
 		System.out.print("Choose Category:\t");
 		int categoryOption = sc.nextInt();
 		displaySubCategoriesBasedOnCategory(categoryOption);
 	}
 
 	private static void displaySubCategoriesBasedOnCategory(int categoryOption) {
-		// TODO Auto-generated method stub
 		ArrayList<SubCategory> subCategoryList = service.displaySubCategoriesBasedOnCategory(categoryOption);
 		if (subCategoryList.isEmpty()) {
 			System.err.println("\nNo Sub Categories and products in this option yet!");
@@ -138,7 +132,7 @@ public class OnlineShoppingApp {
 		} else {
 			System.out.println("\nSub-Categories");
 			System.out.println("-----------------");
-			forPrinting(subCategoryList, (Object subCategory) -> System.out.println(subCategory));
+			subCategoryList.stream().forEach(System.out::println);
 			System.out.print("Select SubCategory:\t");
 			int subCategoryOption = sc.nextInt();
 			displayProductsBasedOnSubCategory(subCategoryOption);
@@ -146,15 +140,15 @@ public class OnlineShoppingApp {
 	}
 
 	private static void displayProductsBasedOnSubCategory(int subCategoryOption) {
-		// TODO Auto-generated method stub
+
 		ArrayList<Product> productList = service.diplayProductsBasedOnSubCategory(subCategoryOption);
 		if (productList.isEmpty()) {
 			System.err.println("\nNo products in this Sub-Category.");
 			displayAllCategories();
 		} else {
-			System.out.println("\nProducts");
+			System.out.println("\nProducts:");
 			System.out.println("-----------------");
-			forPrinting(productList, (Object product) -> System.out.println(product));
+			productList.stream().forEach(System.out::println);
 			System.out.print("Select Product:\t");
 			int productOption = sc.nextInt();
 			System.out.print("Enter Quantity to be added to cart:");
@@ -164,14 +158,7 @@ public class OnlineShoppingApp {
 	}
 
 	private static void addProductToCart(int subCategoryOption, int productOption, int quantityToAdd) {
-		// TODO Auto-generated method stub
 		service.addProductToCart(subCategoryOption, productOption, quantityToAdd);
 	}
 
-	private static void forPrinting(ArrayList<?> categoryList, Consumer<Object> consumer) {
-		// TODO Auto-generated method stub
-		for (Object object : categoryList) {
-			consumer.accept(object);
-		}
-	}
 }

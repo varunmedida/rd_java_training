@@ -15,43 +15,43 @@ public class OnlineShoppingServiceImpl implements OnlineShoppingService {
 
 	@Override
 	public ArrayList<Category> getAllCategories() {
-		// TODO Auto-generated method stub
+		
 		return dao.getAllCategories();
 	}
 
 	@Override
 	public ArrayList<SubCategory> displaySubCategoriesBasedOnCategory(int categoryOption) {
-		// TODO Auto-generated method stub
+		
 		return dao.displaySubCategoriesBasedOnCategory(categoryOption);
 	}
 
 	@Override
 	public ArrayList<Product> diplayProductsBasedOnSubCategory(int subCategoryOption) {
-		// TODO Auto-generated method stub
+		
 		return dao.diplayProductsBasedOnSubCategory(subCategoryOption);
 	}
 
 	@Override
 	public void addProductToCart(int subCategoryOption, int productOption, int quantityToAdd) {
-		// TODO Auto-generated method stub
+		
 		dao.addProductToCart(subCategoryOption,productOption,quantityToAdd);
 	}
 
 	@Override
 	public ArrayList<Cart> viewCart() {
-		// TODO Auto-generated method stub
+		
 		return dao.viewCart();
 	}
 
 	@Override
 	public void removeProductFromCart(int productId) {
-		// TODO Auto-generated method stub
+		
 		dao.removeProductFromCart(productId);
 	}
 
 	@Override
 	public double calculateTotalPrice(ArrayList<Cart> cartList) {
-		// TODO Auto-generated method stub
+		
 		double totalAmount=0;
 		for (Cart cart : cartList) {
 			totalAmount+=cart.getProductPrice()*cart.getQuantityAdded();
@@ -61,7 +61,7 @@ public class OnlineShoppingServiceImpl implements OnlineShoppingService {
 
 	@Override
 	public void updateInventoryStock(ArrayList<Cart> cartList) {
-		// TODO Auto-generated method stub
+
 		dao.updateInventoryStock(cartList);
 	}
 
