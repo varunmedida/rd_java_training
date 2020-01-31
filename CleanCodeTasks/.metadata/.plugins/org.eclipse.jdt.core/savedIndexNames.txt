@@ -1,0 +1,5 @@
+INDEX VERSION 1.131+D:\rd_java_training\CleanCodeTasks\.metadata\.plugins\org.eclipse.jdt.core
+3808349299.index
+1295424668.index
+1073689973.index
+1744221617.index

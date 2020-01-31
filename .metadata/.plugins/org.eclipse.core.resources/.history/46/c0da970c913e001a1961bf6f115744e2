@@ -1,0 +1,11 @@
+package com.epam.service;
+
+import java.util.ArrayList;
+
+import com.epam.model.Category;
+
+public interface OnlineShoppingService {
+
+	ArrayList<Category> getAllCategories();
+
+}

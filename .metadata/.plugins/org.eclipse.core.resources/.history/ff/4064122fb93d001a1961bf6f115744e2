@@ -1,0 +1,24 @@
+package com.epam.service;
+
+import java.util.ArrayList;
+
+import com.epam.dao.OnlineShoppingDao;
+import com.epam.dao.OnlineShoppingDaoImpl;
+import com.epam.model.Category;
+import com.epam.model.SubCategory;
+
+public class OnlineShoppingServiceImpl implements OnlineShoppingService {
+
+	static OnlineShoppingDao dao=new OnlineShoppingDaoImpl();
+	public ArrayList<Category> getAllCategories() {
+		// TODO Auto-generated method stub
+		return dao.getAllCategories();
+	}
+	@SuppressWarnings("rawtypes")
+	@Override
+	public ArrayList<SubCategory> getSubCategoriesBasedOnCategory(int categoryOption) {
+		// TODO Auto-generated method stub
+		return dao.getSubCategoriesBasedOnCategory(categoryOption);
+	}
+
+}

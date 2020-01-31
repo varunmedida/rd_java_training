@@ -1,0 +1,8 @@
+package com.epam.factory;
+
+public abstract class Game {
+	
+	public abstract String getName();
+	public abstract String getType();
+	
+}

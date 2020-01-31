@@ -1,0 +1,21 @@
+package com.epam.factory;
+
+public class PlayStation extends Game {
+	
+	private String name;
+	private String type;
+	
+	
+	@Override
+	public String getName() {
+		
+		return name;
+	}
+
+	@Override
+	public String getType() {
+		
+		return type;
+	}
+
+}

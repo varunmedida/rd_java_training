@@ -1,0 +1,10 @@
+com\epam\dao\OnlineShoppingDaoImpl.class
+com\epam\model\Product.class
+com\epam\model\Category.class
+com\epam\service\OnlineShoppingService.class
+com\epam\OnlineShoppingApp.class
+com\epam\exception\InsufficientQuantity.class
+com\epam\model\SubCategory.class
+com\epam\service\OnlineShoppingServiceImpl.class
+com\epam\dao\OnlineShoppingDao.class
+com\epam\model\Cart.class

@@ -1,0 +1,11 @@
+package com.epam.model;
+
+public class Product {
+
+	private int subCategoryId;
+	private int productId;
+	private String productName;
+	private double productPrice;
+	private int quantityInStock;
+	
+}

@@ -1,0 +1,11 @@
+package com.epam.service;
+
+import com.epam.dao.OnlineShoppingDao;
+import com.epam.dao.OnlineShoppingDaoImpl;
+
+public class OnlineShoppingServiceImpl implements OnlineShoppingService {
+
+	static OnlineShoppingDao dao = new OnlineShoppingDaoImpl();
+
+
+}

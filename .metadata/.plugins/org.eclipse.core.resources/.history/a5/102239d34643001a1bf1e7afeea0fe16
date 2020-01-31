@@ -1,0 +1,14 @@
+package com.epam;
+
+public class ThreadSafe {
+	private static ThreadSafe instance;
+	private ThreadSafe() {}
+	public static  ThreadSafe getInstance() {
+		if(instance==null) {
+			synchronized (ThreadSafe.class) {
+				instance= new ThreadSafe();	
+			}
+		}
+		return instance;
+	}
+}
