@@ -1,9 +1,0 @@
-package com.epam.builder;
-
-public class Game {
-	private String name;
-	private String type;
-	private boolean availableInCD;
-	
-	
-}

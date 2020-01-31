@@ -1,7 +1,0 @@
-package com.epam;
-
-public class ThreadSafe {
-	private static ThreadSafe instance;
-	private ThreadSafe() {}
-	
-}

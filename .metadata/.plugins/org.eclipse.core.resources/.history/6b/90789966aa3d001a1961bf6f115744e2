@@ -1,5 +1,0 @@
-package com.epam.service;
-
-public class OnlineShoppingServiceImpl implements OnlineShoppingService {
-
-}
