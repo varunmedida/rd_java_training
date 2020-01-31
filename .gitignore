@@ -1,0 +1,14 @@
+.metadata/
+.sonarlint/
+DesignPatterns/
+EcommersProject-Java8Features/target/
+CleanCodeTasks/.metadata/
+CleanCodeTasks/.settings/
+CleanCodeTasks/Comments/target
+CleanCodeTasks/Complex-task/target
+CleanCodeTasks/DRY/target
+CleanCodeTasks/Error-Handling/target
+CleanCodeTasks/Functions/target
+CleanCodeTasks/Naming/target
+MavenUsingCommandLine/maven-project/target
+*.class
