@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.epam.model.Cart;
 import com.epam.model.Category;
 import com.epam.model.Product;
@@ -15,7 +18,7 @@ public class OnlineShoppingDaoImpl implements OnlineShoppingDao {
 	ArrayList<SubCategory> subCategoryList = new ArrayList<>();
 	ArrayList<Product> productList = new ArrayList<>();
 	ArrayList<Cart> cartList = new ArrayList<>();
-
+	static Logger logger = LogManager.getLogger(OnlineShoppingDaoImpl.class);
 	public OnlineShoppingDaoImpl() {
 
 		categoryList.add(new Category(1, "Electronics"));
@@ -68,7 +71,7 @@ public class OnlineShoppingDaoImpl implements OnlineShoppingDao {
 				notPresentInCart(productToCart, quantityToAdd);
 			}
 		} else {
-			System.err.println("Product Not Present");
+			logger.error("Product Not Present");
 		}
 	}
 
@@ -77,9 +80,9 @@ public class OnlineShoppingDaoImpl implements OnlineShoppingDao {
 		if (quantityToAdd <= productToCart.getQuantityInStock()) {
 			cartList.add(new Cart(productToCart.getProductId(), productToCart.getProductName(),
 					productToCart.getProductPrice(), quantityToAdd));
-			System.out.println("Product Added to Cart.");
+			logger.info("Product Added to Cart.");
 		} else {
-			System.err.println("Insufficient Quantity!");
+			logger.error("Insufficient Quantity!");
 		}
 	}
 
@@ -87,9 +90,9 @@ public class OnlineShoppingDaoImpl implements OnlineShoppingDao {
 
 		if (productPresentInCart.getQuantityAdded() + quantityToAdd <= productToCart.getQuantityInStock()) {
 			productPresentInCart.setQuantityAdded(quantityToAdd + productPresentInCart.getQuantityAdded());
-			System.out.println("Product already present. Increased quantity.");
+			logger.info("Product already present. Increased quantity.");
 		} else {
-			System.err.println("Insufficient Quantity!");
+			logger.error("Insufficient Quantity!");
 		}
 	}
 
@@ -107,9 +110,9 @@ public class OnlineShoppingDaoImpl implements OnlineShoppingDao {
 		Optional<Cart> cartOptional = Optional.ofNullable(productToBeRemoved);
 		if (cartOptional.isPresent()) {
 			cartList.remove(productToBeRemoved);
-			System.out.println("Product Removed Successfully");
+			logger.info("Product Removed Successfully");
 		} else {
-			System.err.println("Product not found to be removed.");
+			logger.error("Product not found to be removed.");
 		}
 	}
 
