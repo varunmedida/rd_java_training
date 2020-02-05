@@ -3,6 +3,6 @@
 ## Task Completed
 
 ```
-* Followed proper naming conventions in order to achieve the principles of clean code.
+* Followed proper naming conventions in order to achieve the principles of clean-code.
 ```
 
