@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.epam.model.Cart;
 import com.epam.model.Category;
 import com.epam.model.Product;
@@ -15,16 +18,20 @@ public class OnlineShoppingApp {
 	static Scanner sc = new Scanner(System.in);
 	static OnlineShoppingService service = new OnlineShoppingServiceImpl();
 	private static final String LINE = "--------------------------------------";
-
+	static Logger logger = LogManager.getLogger(OnlineShoppingApp.class);
 	public static void main(String[] args) {
-		System.out.println(LINE);
-		System.out.println("|	Welcome to EPAMER's Store	|");
-		System.out.println(LINE);
+		logger.info(LINE);
+		logger.info("|	Welcome to EPAMER's Store	|");
+		logger.info(LINE);
 		boolean continueShopping = true;
 		do {
-			System.out.println("\nWhat would you like to do?");
-			System.out.println("1. Shopping\n2. View Cart\n3. Remove products from cart\n4. Checkout\n5. Exit");
-			System.out.print("Choose an option:\t");
+			logger.info("What would you like to do?");
+			logger.info("1. Shopping");
+			logger.info("2. View Cart");
+			logger.info("3. Remove products from cart");
+			logger.info("4. Checkout");
+			logger.info("5. Exit");
+			logger.info("Choose an option:\t");
 			try {
 				int option = sc.nextInt();
 				switch (option) {
@@ -41,19 +48,19 @@ public class OnlineShoppingApp {
 					boolean checkedOut = checkout();
 					if (checkedOut) {
 						continueShopping = false;
-						System.out.println("Thank you for shopping with us.");
+						logger.info("Thank you for shopping with us.");
 					}
 					break;
 				case 5:
 					continueShopping = false;
-					System.out.println("Thank you for shopping with us.");
+					logger.info("Thank you for shopping with us.");
 					break;
 				default:
-					System.err.println("Invalid option. Please enter again!");
+					logger.error("Invalid option. Please enter again!");
 					break;
 				}
 			} catch (InputMismatchException inputMismatch) {
-				System.err.println("\nInvalid option. Please enter again!");
+				logger.error("Invalid option. Please enter again!");
 				sc.next();
 			}
 		} while (continueShopping);
@@ -65,16 +72,16 @@ public class OnlineShoppingApp {
 		boolean checkedOut = false;
 		ArrayList<Cart> cartList = service.viewCart();
 		if (cartList.isEmpty()) {
-			System.err.println("\nNo Products in item to buy");
+			logger.error("No Products in item to buy");
 		} else {
-			System.out.println("\nCart:");
-			System.out.println("\nProducts");
-			System.out.println(LINE);
-			cartList.stream().forEach(System.out::println);
-			System.out.println(LINE);
+			logger.info("Cart:");
+			logger.info("Products");
+			logger.info(LINE);
+			cartList.stream().forEach(product -> logger.info(product));
+			logger.info(LINE);
 			double totalAmount = service.calculateTotalPrice(cartList);
-			System.out.println("TOTAL AMOUNT:\t" + totalAmount);
-			System.out.println("WOULD YOU LIKE TO CHECKOUT?(y/n)");
+			logger.info("TOTAL AMOUNT:\t {}", totalAmount);
+			logger.info("WOULD YOU LIKE TO CHECKOUT?(y/n)");
 			char checkout = sc.next().charAt(0);
 			if (checkout == 'y') {
 				service.updateInventoryStock(cartList);
@@ -89,13 +96,13 @@ public class OnlineShoppingApp {
 	private static void removeProductFromCart() {
 		ArrayList<Cart> cartList = service.viewCart();
 		if (cartList.isEmpty()) {
-			System.err.println("\nNo Products to remove from cart as cart is empty");
+			logger.error("No Products to remove from cart as cart is empty");
 		} else {
-			System.out.println("\nCart Products:");
-			System.out.println(LINE);
-			cartList.stream().forEach(System.out::println);
-			System.out.println(LINE);
-			System.out.print("Enter product id to be removed:");
+			logger.info("Cart Products:");
+			logger.info(LINE);
+			cartList.stream().forEach(product -> logger.info(product));
+			logger.info(LINE);
+			logger.info("Enter product id to be removed:");
 			int productId = sc.nextInt();
 			service.removeProductFromCart(productId);
 		}
@@ -104,22 +111,22 @@ public class OnlineShoppingApp {
 	private static void viewCart() {
 		ArrayList<Cart> cartList = service.viewCart();
 		if (cartList.isEmpty()) {
-			System.err.println("\nNo Products in cart");
+			logger.error("No Products in cart");
 		} else {
-			System.out.println("\nCart:");
-			System.out.println("\nProducts");
-			System.out.println(LINE);
-			cartList.stream().forEach(System.out::println);
-			System.out.println(LINE);
+			logger.info("Cart:");
+			logger.info("Products");
+			logger.info(LINE);
+			cartList.stream().forEach(product -> logger.info(product));
+			logger.info(LINE);
 		}
 	}
 
 	private static void displayAllCategories() {
 		ArrayList<Category> categoryList = service.getAllCategories();
-		System.out.println("\nCategories");
-		System.out.println("-----------");
-		categoryList.stream().forEach(System.out::println);
-		System.out.print("Choose Category:\t");
+		logger.info("Categories");
+		logger.info("-----------");
+		categoryList.stream().forEach(product -> logger.info(product));
+		logger.info("Choose Category:\t");
 		int categoryOption = sc.nextInt();
 		displaySubCategoriesBasedOnCategory(categoryOption);
 	}
@@ -127,13 +134,13 @@ public class OnlineShoppingApp {
 	private static void displaySubCategoriesBasedOnCategory(int categoryOption) {
 		ArrayList<SubCategory> subCategoryList = service.displaySubCategoriesBasedOnCategory(categoryOption);
 		if (subCategoryList.isEmpty()) {
-			System.err.println("\nNo Sub Categories and products in this option yet!");
+			logger.error("No Sub Categories and products in this option yet!");
 			displayAllCategories();
 		} else {
-			System.out.println("\nSub-Categories");
-			System.out.println("-----------------");
-			subCategoryList.stream().forEach(System.out::println);
-			System.out.print("Select SubCategory:\t");
+			logger.info("Sub-Categories");
+			logger.info("-----------------");
+			subCategoryList.stream().forEach(subCategory -> logger.info(subCategory));
+			logger.info("Select SubCategory:\t");
 			int subCategoryOption = sc.nextInt();
 			displayProductsBasedOnSubCategory(subCategoryOption);
 		}
@@ -143,15 +150,15 @@ public class OnlineShoppingApp {
 
 		ArrayList<Product> productList = service.diplayProductsBasedOnSubCategory(subCategoryOption);
 		if (productList.isEmpty()) {
-			System.err.println("\nNo products in this Sub-Category.");
+			logger.error("No products in this Sub-Category.");
 			displayAllCategories();
 		} else {
-			System.out.println("\nProducts:");
-			System.out.println("-----------------");
-			productList.stream().forEach(System.out::println);
-			System.out.print("Select Product:\t");
+			logger.info("Products:");
+			logger.info("-----------------");
+			productList.stream().forEach(product -> logger.info(product));
+			logger.info("Select Product:\t");
 			int productOption = sc.nextInt();
-			System.out.print("Enter Quantity to be added to cart:");
+			logger.info("Enter Quantity to be added to cart:");
 			int quantityToAdd = sc.nextInt();
 			addProductToCart(subCategoryOption, productOption, quantityToAdd);
 		}
