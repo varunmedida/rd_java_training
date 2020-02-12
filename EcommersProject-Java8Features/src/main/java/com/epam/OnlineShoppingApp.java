@@ -15,6 +15,7 @@ import com.epam.service.OnlineShoppingService;
 import com.epam.service.OnlineShoppingServiceImpl;
 
 public class OnlineShoppingApp {
+	
 	static Scanner sc = new Scanner(System.in);
 	static OnlineShoppingService service = new OnlineShoppingServiceImpl();
 	private static final String LINE = "--------------------------------------";
