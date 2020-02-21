@@ -1,4 +1,4 @@
-package com.epam.beans;
+package com.epam.model;
 
 public class Cart {
 	private int productId;
@@ -45,7 +45,6 @@ public class Cart {
 	public void setQuantityAdded(int quantityAdded) {
 		this.quantityAdded = quantityAdded;
 	}
-	
 
 	@Override
 	public String toString() {
@@ -67,27 +66,22 @@ public class Cart {
 
 	@Override
 	public boolean equals(Object obj) {
-		boolean same=true;
-		if (this == obj)
-			same=true;
+		boolean same = true;
 		if (obj == null)
-			same=false;
-		if (getClass() != obj.getClass())
-			same=false;
+			same = false;
 		Cart other = (Cart) obj;
 		if (productId != other.productId)
-			same=false;
+			same = false;
 		if (productName == null) {
 			if (other.productName != null)
-				same=false;
+				same = false;
 		} else if (!productName.equals(other.productName))
-			same=false;
+			same = false;
 		if (Double.doubleToLongBits(productPrice) != Double.doubleToLongBits(other.productPrice))
-			same=false;
+			same = false;
 		if (quantityAdded != other.quantityAdded)
-			same=false;
+			same = false;
 		return same;
 	}
-	
-	
+
 }

@@ -1,18 +1,11 @@
-package com.epam.beans;
+package com.epam.model;
 
-public class Cart {
+public class Product {
 	private int productId;
+	private int subCategoryId;
 	private String productName;
 	private double productPrice;
-	private int quantityAdded;
-
-	public Cart(int productId, String productName, double productPrice, int quantityAdded) {
-		super();
-		this.productId = productId;
-		this.productName = productName;
-		this.productPrice = productPrice;
-		this.quantityAdded = quantityAdded;
-	}
+	private int quantityOfStock;
 
 	public int getProductId() {
 		return productId;
@@ -20,6 +13,14 @@ public class Cart {
 
 	public void setProductId(int productId) {
 		this.productId = productId;
+	}
+
+	public int getSubCategoryId() {
+		return subCategoryId;
+	}
+
+	public void setSubCategoryId(int subCategoryId) {
+		this.subCategoryId = subCategoryId;
 	}
 
 	public String getProductName() {
@@ -38,18 +39,26 @@ public class Cart {
 		this.productPrice = productPrice;
 	}
 
-	public int getQuantityAdded() {
-		return quantityAdded;
+	public int getQuantityOfStock() {
+		return quantityOfStock;
 	}
 
-	public void setQuantityAdded(int quantityAdded) {
-		this.quantityAdded = quantityAdded;
+	public void setQuantityOfStock(int quantityOfStock) {
+		this.quantityOfStock = quantityOfStock;
 	}
-	
+
+	public Product(int productId, int subCategoryId, String productName, double productPrice, int quantityOfStock) {
+		super();
+		this.productId = productId;
+		this.subCategoryId = subCategoryId;
+		this.productName = productName;
+		this.productPrice = productPrice;
+		this.quantityOfStock = quantityOfStock;
+	}
 
 	@Override
 	public String toString() {
-		return "|\t" + productId + "\t" + productName + "\t" + productPrice + "\t   " + quantityAdded + "    |";
+		return productId + " " + productName+ " " + productPrice + " " + quantityOfStock ;
 	}
 
 	@Override
@@ -61,33 +70,35 @@ public class Cart {
 		long temp;
 		temp = Double.doubleToLongBits(productPrice);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
-		result = prime * result + quantityAdded;
+		result = prime * result + quantityOfStock;
+		result = prime * result + subCategoryId;
 		return result;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		boolean same=true;
 		if (this == obj)
-			same=true;
+			return true;
 		if (obj == null)
-			same=false;
+			return false;
 		if (getClass() != obj.getClass())
-			same=false;
-		Cart other = (Cart) obj;
+			return false;
+		Product other = (Product) obj;
 		if (productId != other.productId)
-			same=false;
+			return false;
 		if (productName == null) {
 			if (other.productName != null)
-				same=false;
+				return false;
 		} else if (!productName.equals(other.productName))
-			same=false;
+			return false;
 		if (Double.doubleToLongBits(productPrice) != Double.doubleToLongBits(other.productPrice))
-			same=false;
-		if (quantityAdded != other.quantityAdded)
-			same=false;
-		return same;
+			return false;
+		if (quantityOfStock != other.quantityOfStock)
+			return false;
+		if (subCategoryId != other.subCategoryId)
+			return false;
+		return true;
 	}
-	
+
 	
 }
