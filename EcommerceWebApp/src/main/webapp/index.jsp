@@ -14,8 +14,18 @@
 		<h1>Epamer's Store</h1>
 	</div>
 	<div class="container">
-		<a href="http://localhost:8080/EcommerceWebApp/categories"
-			class="btn btn-link"> <img alt="Shopping" src="img/shopping.jpg"></a>
+		<div class="row">
+			<div class="col">
+				<a href="http://localhost:8080/EcommerceWebApp/categories"
+					class="btn btn-link "> <img alt="Shopping"
+					src="img/shopping.jpg"></a>
+			</div>
+			<div class="col">
+				<a href="http://localhost:8080/EcommerceWebApp/categories"
+					class="btn btn-link "> <img alt="Shopping"
+					src="img/shopping.jpg"></a>
+			</div>
+		</div>
 	</div>
 </body>
 </html>

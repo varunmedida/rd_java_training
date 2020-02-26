@@ -1,10 +1,15 @@
 package com.epam.model;
 
-public class Category {
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
+@Entity
+public class Category {
+	@Id
 	private int categoryId;
 	private String categoryName;
 
+	public Category() {}
 	public int getCategoryId() {
 		return categoryId;
 	}

@@ -1,6 +1,11 @@
 package com.epam.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class Product {
+	@Id
 	private int productId;
 	private int subCategoryId;
 	private String productName;
