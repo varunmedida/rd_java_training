@@ -1,8 +1,8 @@
 package com.epam.service;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
-import static org.junit.jupiter.api.Assertions.*; 
-import java.util.ArrayList;
+
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -18,6 +18,10 @@ class CategoryServiceImplTest {
 	
 	@Mock
 	OnlineShoppingDao dao;
+	@Mock
+	Category category;
+	@Mock
+	List<Category> categories;
 
 	@InjectMocks
 	CategoryServiceImpl categoryService;
@@ -29,10 +33,8 @@ class CategoryServiceImplTest {
 
 	@Test
 	void testGetAllCategories() {
-		Category category = new Category();
 		category.setCategoryId(1);
 		category.setCategoryName("abc");
-		List<Category> categories = new ArrayList<>();
 		categories.add(category);
 		when(dao.getAllCategories()).thenReturn(categories);
 		assertEquals(categories,categoryService.getAllCategories());
