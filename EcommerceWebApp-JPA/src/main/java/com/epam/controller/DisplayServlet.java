@@ -33,9 +33,9 @@ public class DisplayServlet extends HttpServlet {
 
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher requestDispatcher;
-		try {
+	
 			request.setAttribute("categories", categoryService.getAllCategories());
 
 			String categoryRequest = request.getParameter("category");
@@ -65,9 +65,6 @@ public class DisplayServlet extends HttpServlet {
 
 			}
 			requestDispatcher.forward(request, response);
-		} catch (IOException | ServletException message) {
-			logger.info(message);
-		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
