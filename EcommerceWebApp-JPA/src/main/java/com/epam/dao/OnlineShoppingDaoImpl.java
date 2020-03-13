@@ -4,10 +4,6 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 
 import com.epam.model.CartItem;
 import com.epam.model.Category;
@@ -23,33 +19,36 @@ public class OnlineShoppingDaoImpl implements OnlineShoppingDao {
 	@Override
 	public List<Category> getAllCategories() {
 		EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
-		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-		CriteriaQuery<Category> criteriaQuery = criteriaBuilder.createQuery(Category.class);
-		Root<Category> category = criteriaQuery.from(Category.class);
-		criteriaQuery.select(category);
-		TypedQuery<Category> query = entityManager.createQuery(criteriaQuery);
-		List<Category> categories = query.getResultList();
+		List<Category> categories = entityManager.createQuery("select c from Category c", Category.class)
+				.getResultList();
+		entityManager.close();
 		return categories;
 	}
 
 	@Override
 	public List<SubCategory> getSubCategoriesBasedOnCategory(int categoryOption) {
 		EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
-		Category category = entityManager.find(Category.class, categoryOption);
-		return category.getSubCategories();
+		List<SubCategory> subCategories = entityManager
+				.createQuery("select s from SubCategory s where s.category=" + categoryOption, SubCategory.class)
+				.getResultList();
+		entityManager.close();
+		return subCategories;
 	}
 
 	@Override
 	public List<Product> getProductsBasedOnSubCategory(int subCategoryOption) {
 		EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
 		SubCategory subCategory = entityManager.find(SubCategory.class, subCategoryOption);
+		entityManager.close();
 		return subCategory.getProducts();
 	}
 
 	@Override
 	public Product getProductById(int productOption) {
 		EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
-		return entityManager.find(Product.class, productOption);
+		Product product = entityManager.find(Product.class, productOption);
+		entityManager.close();
+		return product;
 	}
 
 	@Override
@@ -57,23 +56,27 @@ public class OnlineShoppingDaoImpl implements OnlineShoppingDao {
 		CartItem cartItem = new CartItem();
 		cartItem.setProduct(product);
 		if (shoppingCart.getCartItems().isEmpty()) {
-			cartItem.setQuantityToCart(quantityAdded);
-
-			shoppingCart.addToShoppingCart(cartItem);
-
+			addItemToCart(quantityAdded, cartItem);
 		} else {
-			for (CartItem cartProduct : shoppingCart.getCartItems()) {
-				if (cartProduct.getProduct().getProductId() == cartItem.getProduct().getProductId()) {
-					cartProduct.setQuantityToCart(quantityAdded + cartProduct.getQuantityToCart());
-				} else {
-					cartItem.setQuantityToCart(quantityAdded);
-
-					shoppingCart.addToShoppingCart(cartItem);
-
-				}
-			}
+			updateOrAddItemToCart(quantityAdded, cartItem);
 		}
 
+	}
+
+	private void updateOrAddItemToCart(int quantityAdded, CartItem cartItem) {
+		for (CartItem cartProduct : shoppingCart.getCartItems()) {
+			if (cartProduct.getProduct().getProductId() == cartItem.getProduct().getProductId()) {
+				cartProduct.setQuantityToCart(quantityAdded + cartProduct.getQuantityToCart());
+			} else {
+				addItemToCart(quantityAdded, cartItem);
+
+			}
+		}
+	}
+
+	private void addItemToCart(int quantityAdded, CartItem cartItem) {
+		cartItem.setQuantityToCart(quantityAdded);
+		shoppingCart.addToShoppingCart(cartItem);
 	}
 
 	@Override

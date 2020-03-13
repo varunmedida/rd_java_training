@@ -10,6 +10,7 @@ public class SubCategory {
 	private int categoryId;
 	private String subCategoryName;
 
+	public SubCategory() {}
 	public int getSubCategoryId() {
 		return subCategoryId;
 	}

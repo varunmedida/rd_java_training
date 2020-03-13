@@ -1,0 +1,8 @@
+com\epam\model\CategoryTest.class
+com\epam\model\ProductTest.class
+com\epam\model\SubCategoryTest.class
+com\epam\controller\ViewCartServletTest.class
+com\epam\model\CartItemTest.class
+com\epam\service\SubCategoryServiceImplTest.class
+com\epam\service\CategoryServiceImplTest.class
+com\epam\service\ProductServiceImplTest.class

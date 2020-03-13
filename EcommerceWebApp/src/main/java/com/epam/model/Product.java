@@ -12,6 +12,8 @@ public class Product {
 	private double productPrice;
 	private int quantityOfStock;
 
+	public Product() {
+	}
 	public int getProductId() {
 		return productId;
 	}
