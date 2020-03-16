@@ -16,6 +16,7 @@ public class ErrorsController implements ErrorController {
 	@RequestMapping("/error")
 	public ModelAndView handleError(HttpServletResponse response, ModelAndView modelAndView) {
 		if (response.getStatus() == HttpStatus.NOT_FOUND.value()) {
+			LOGGER.info("-----Page not found-----");
 			modelAndView.setViewName("Error_404");
 		} else if (response.getStatus() == HttpStatus.FORBIDDEN.value()) {
 			modelAndView.setViewName("Error_403");

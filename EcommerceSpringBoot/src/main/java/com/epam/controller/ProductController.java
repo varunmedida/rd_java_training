@@ -28,6 +28,7 @@ public class ProductController {
 
 	@PostMapping("productdetail")
 	public ModelAndView getProductDetails(ModelAndView model, @RequestParam Long productId) {
+		LOGGER.info("----Get Product Details----");
 		model.addObject("product", productService.getProductDetails(productId));
 		model.setViewName("singleproduct");
 		return model;
@@ -38,11 +39,12 @@ public class ProductController {
 		response.setContentType("image/jpeg");
 		byte[] bytes;
 		try {
+			LOGGER.info("----Get Product Details----");
 			bytes = productService.getPhotoById(productId);
 			InputStream inputStream = new ByteArrayInputStream(bytes);
 			IOUtils.copy(inputStream, response.getOutputStream());
-		} catch (IOException e) {
-			LOGGER.info(e);
+		} catch (IOException exception) {
+			LOGGER.info(exception);
 		}
 	}
 }

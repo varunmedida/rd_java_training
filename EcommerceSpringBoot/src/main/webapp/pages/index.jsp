@@ -121,7 +121,7 @@
 						<div class="col-lg-3 col-sm-4">
 							<form action="productdetail" method="post">
 								<div class="single_category_product"
-									onclick="$(this).closest('form').submit()">
+									onclick="$(this).closest('form').submit()" style="cursor: pointer">
 
 									<input type="hidden" name="productId"
 										value="${product.productId}">

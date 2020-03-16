@@ -27,8 +27,9 @@ public class CartController {
 			@RequestParam("quantity") Long quantity) {
 		String addedToCart = "";
 		try {
-			LOGGER.info("-----View Cart Functionality Called-----");
+			LOGGER.info("-----Add product to Cart-----");
 			cartService.addToCart(productId, quantity);
+			LOGGER.info("-----Product Added to Cart-----");
 			addedToCart = "<div class='alert alert-success'>Product Added To Cart.</div>";
 		} catch (InsufficientQuantityException exception) {
 			LOGGER.error(exception.getMessage());
@@ -44,6 +45,7 @@ public class CartController {
 	@GetMapping("/viewcart")
 	public ModelAndView viewCart(ModelAndView model) {
 		try {
+			LOGGER.info("-----View Cart-----");
 			model.addObject("cart", cartService.viewCart());
 		} catch (EmptyCartException exception) {
 			LOGGER.error(exception.getMessage());
@@ -56,6 +58,7 @@ public class CartController {
 	public ModelAndView deleteProduct(ModelAndView model, @RequestParam("cartId") Long cartId) {
 		model.addObject("productRemoved", cartService.deleteProduct(cartId));
 		try {
+			LOGGER.info("-----Delete product from cart-----");
 			model.addObject("cart", cartService.viewCart());
 		} catch (EmptyCartException exception) {
 			LOGGER.error(exception.getMessage());

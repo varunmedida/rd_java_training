@@ -130,7 +130,7 @@
 						<c:forEach var="product" items="${products}">
 							<div class="col-lg-4 col-sm-6">
 							<form action="productdetail" method="post">
-								<div class="single_category_product" onclick="$(this).closest('form').submit()">
+								<div class="single_category_product" onclick="$(this).closest('form').submit()" style="cursor: pointer">
 								
 									<div class="single_category_img">
 										<img src="getProductPhoto/${product.productId}" height="250px"
