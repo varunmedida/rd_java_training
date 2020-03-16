@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html;"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!doctype html>
 <html>
@@ -109,11 +108,10 @@
 					</c:if>
 
 					<c:if test="${!empty cart.cartItems}">
-						
+
 						<c:if test="${productRemoved}">
-						<div class="alert alert-success">
-							Product Removed from cart.
-						</div>
+							<div class="alert alert-success">Product Removed from cart.
+							</div>
 						</c:if>
 						<table class="table">
 							<thead>
@@ -145,26 +143,40 @@
 											<div class="product_count">
 
 												<span class="input-number-decrement"> <i
-													class="ti-minus"></i></span> <input class="input-number"
+													class="ti-minus"></i></span><input class="input-number"
 													type="number" value="${cartItem.quantity}" min="0"
-													max="${cartItem.product.quantity}"> <span
-													class="input-number-increment"> <i class="ti-plus"></i></span>
+													max="${cartItem.product.quantity}" readonly="readonly">
+												<span class="input-number-increment"> <i
+													class="ti-plus"></i></span>
 											</div>
 										</td>
 										<td>
-										<form action="delete" method="post">
-										<span><input type="hidden" name="cartId" value="${cartItem.cartId}"></span>
-										<img src="img/removeproduct.png" style="margin-left: 10%" width="30px" height="30px" onclick="$(this).closest('form').submit()">
-										</form>
+											<form action="delete" method="post">
+												<span><input type="hidden" name="cartId"
+													value="${cartItem.cartId}"></span> <img
+													src="img/removeproduct.png"
+													style="margin-left: 12%; cursor: pointer;" width="30px"
+													height="30px" onclick="$(this).closest('form').submit()">
+											</form>
 										</td>
 									</tr>
 								</c:forEach>
 								<tr class="bottom_button">
 									<td>
-										<!-- <form action="">
-									<input type="hidden" name="shoppingCart" >
-									<button class="btn_1" href="#">Update Cart</button>
-									</form> -->
+
+
+										<button class="btn_1"
+											onclick="placeOrder(${cart.shoppingCartId},${cart.cartItems},${cart.totalAmount})">UpdateCart</button>
+											<script type="text/javascript">
+										function placeOrder(scid,ci,amount) {
+									        var shoppingCart = {shoppingCartId:scid,cartItems:ci,totalAmount:amount};
+									        var xhr = new XMLHttpRequest();
+									        xhr.open("POST", "http://localhost:8081/updatecart", true);
+									        xhr.setRequestHeader('Content-Type', 'application/json');
+									        xhr.send(JSON.stringify(shoppingCart));
+									    }
+										</script>
+
 									</td>
 									<td></td>
 									<td></td>

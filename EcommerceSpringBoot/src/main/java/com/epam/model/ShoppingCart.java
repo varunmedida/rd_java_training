@@ -55,11 +55,5 @@ public class ShoppingCart {
 		}
 		this.totalAmount = totalAmount;
 	}
-	@Override
-	public String toString() {
-		return "ShoppingCart [shoppingCartId=" + shoppingCartId + ", cartItems=" + cartItems + ", totalAmount="
-				+ totalAmount + "]";
-	}
-	
 	
 }

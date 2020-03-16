@@ -11,6 +11,8 @@ import javax.persistence.OneToMany;
 
 import org.springframework.lang.NonNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Category {
 
@@ -20,6 +22,7 @@ public class Category {
 	@NonNull
 	private String categoryName;
 	@OneToMany(mappedBy = "category")
+	@JsonIgnore
 	private List<SubCategory> subCategories = new ArrayList<>();
 	public Long getCategoryId() {
 		return categoryId;

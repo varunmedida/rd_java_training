@@ -14,6 +14,8 @@ import javax.persistence.OneToMany;
 
 import org.springframework.lang.NonNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Product {
 
@@ -27,10 +29,13 @@ public class Product {
 	@NonNull
 	private Long quantity;
 	@Lob
+	@JsonIgnore
     private byte[] productImage;
 	@ManyToOne
+	@JsonIgnore
 	private SubCategory subCategory;
 	@OneToMany(mappedBy = "product")
+	@JsonIgnore
 	private List<ProductAttribute> productAttribures = new ArrayList<>();
 	@Override
 	public String toString() {

@@ -121,7 +121,7 @@
 								<div class="product_count d-inline-block">
 									<span class="inumber-decrement"> <i class="ti-minus"></i></span>
 									<input class="input-number" type="number" value="1" min="0"
-										name="quantity" max="${product.quantity}"> <span
+										name="quantity" max="${product.quantity}" readonly="readonly"> <span
 										class="number-increment"> <i class="ti-plus"></i></span>
 								</div>
 								<div class="add_to_cart">

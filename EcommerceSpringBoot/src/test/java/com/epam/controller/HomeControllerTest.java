@@ -39,7 +39,6 @@ class HomeControllerTest {
 	public void setup() {
 		MockitoAnnotations.initMocks(this);
 		this.mockMvc = MockMvcBuilders.standaloneSetup(homeController).build();
-
 	}
 
 	@BeforeAll
