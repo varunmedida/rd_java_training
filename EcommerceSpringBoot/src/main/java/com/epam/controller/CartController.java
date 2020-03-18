@@ -3,19 +3,15 @@ package com.epam.controller;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.epam.exception.EmptyCartException;
 import com.epam.exception.InsufficientQuantityException;
-import com.epam.model.ShoppingCart;
 import com.epam.service.CartService;
 import com.epam.service.ProductService;
 
@@ -38,7 +34,7 @@ public class CartController {
 			addedToCart = "<div class='alert alert-success'>Product Added To Cart.</div>";
 		} catch (InsufficientQuantityException exception) {
 			LOGGER.error(exception.getMessage());
-			addedToCart = "<div class='alert alert-danger'>You cannot add item because it has exceeded stock quantity.</div>";
+			addedToCart = "<div class='alert alert-danger'>Product already in cart.Exceeded Stock Quantity</div>";
 		} finally {
 			model.addObject("addedToCart", addedToCart);
 			model.addObject("product", productService.getProductDetails(productId));
@@ -60,28 +56,42 @@ public class CartController {
 	}
 
 	@PostMapping("/delete")
-	public ModelAndView deleteProduct(ModelAndView model, @RequestParam("cartId") Long cartId) {
-		model.addObject("productRemoved", cartService.deleteProduct(cartId));
+	public RedirectView deleteProduct(ModelAndView model, @RequestParam("cartId") Long cartId,
+			RedirectView redirectView) {
+
 		try {
 			LOGGER.info("-----Delete product from cart-----");
+			model.addObject("productRemoved", cartService.deleteProduct(cartId));
 			model.addObject("cart", cartService.viewCart());
 		} catch (EmptyCartException exception) {
 			LOGGER.error(exception.getMessage());
 		}
-		model.setViewName("cart");
-		return model;
+		redirectView.setUrl("/viewcart");
+		return redirectView;
 	}
 
 	@PostMapping("/updatecart")
-	public ModelAndView updateCart(ModelAndView model, @RequestBody ShoppingCart shoppingCart) {
-		System.out.println(shoppingCart);
+	public RedirectView updateCart(ModelAndView model, @RequestParam("productId") Long productId,
+			@RequestParam("quantity") Long quantity, RedirectView redirectView) {
+		try {
+			LOGGER.info("-----Update product from cart-----");
+			model.addObject("updatedCart", cartService.updateCart(productId, quantity));
+		} catch (InsufficientQuantityException exception) {
+			LOGGER.error(exception.getMessage());
+		}
+		redirectView.setUrl("/viewcart");
 
-		/*
-		 * try { model.addObject("cart",cartService.updateProduct(shoppingCart));
-		 * model.addObject("cart", cartService.viewCart()); } catch (EmptyCartException
-		 * exception) { LOGGER.error(exception.getMessage()); }
-		 * model.setViewName("cart");
-		 */
+		return redirectView;
+	}
+	
+	@GetMapping("/checkout")
+	public ModelAndView checkout(ModelAndView model) {
+		try {
+			model.addObject("shoppingCart", cartService.checkout());
+		} catch (InsufficientQuantityException message) {
+			LOGGER.error(message.getMessage());
+		}
+		model.setViewName("checkout");
 		return model;
 	}
 

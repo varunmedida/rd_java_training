@@ -9,7 +9,6 @@ import com.epam.dao.CartDao;
 import com.epam.dao.ProductDao;
 import com.epam.exception.EmptyCartException;
 import com.epam.exception.InsufficientQuantityException;
-import com.epam.model.CartItem;
 import com.epam.model.ShoppingCart;
 
 @Service
@@ -20,7 +19,9 @@ public class CartServiceImpl implements CartService {
 	CartDao cartDao;
 	@Autowired
 	ProductDao productDao;
-	
+	@Autowired
+	ShoppingCart shoppingCart;
+
 	@Override
 	public ShoppingCart viewCart() throws EmptyCartException {
 		LOGGER.info("----View Cart Service---");
@@ -28,11 +29,11 @@ public class CartServiceImpl implements CartService {
 	}
 
 	@Override
-	public boolean addToCart(Long productId, Long quantity) throws InsufficientQuantityException{
-		boolean addedToCart=false;
-		if(productDao.getProductDetails(productId).getQuantity()>=quantity && quantity>0) {
-			addedToCart=cartDao.addToCart(productDao.getProductDetails(productId),quantity);
-		}else {
+	public boolean addToCart(Long productId, Long quantity) throws InsufficientQuantityException {
+		boolean addedToCart = false;
+		if (productDao.getProductDetails(productId).getQuantity() >= quantity && quantity > 0) {
+			addedToCart = cartDao.addToCart(productDao.getProductDetails(productId), quantity);
+		} else {
 			throw new InsufficientQuantityException("----Insufficient stock----");
 		}
 		return addedToCart;
@@ -44,10 +45,19 @@ public class CartServiceImpl implements CartService {
 	}
 
 	@Override
-	public ShoppingCart updateProduct(ShoppingCart shoppingCart) {
-		for(CartItem cartItem : shoppingCart.getCartItems()) {
-			//if(productDao.getProductDetails(cartItem.getProduct().getProductId()).getQuantity()>= cartItem.getQuantity())
+	public boolean updateCart(Long productId, Long quantity) throws InsufficientQuantityException {
+		boolean updatedCart = false;
+		if (productDao.getProductDetails(productId).getQuantity() >= quantity && quantity > 0) {
+			updatedCart = cartDao.updateCart(productDao.getProductDetails(productId), quantity);
+		} else {
+			throw new InsufficientQuantityException("----Insufficient stock----");
 		}
-		return null;
+		return updatedCart;
 	}
+
+	@Override
+	public ShoppingCart checkout() throws InsufficientQuantityException {
+		return cartDao.checkout();
+	}
+
 }

@@ -13,4 +13,8 @@ public interface CartDao {
 
 	boolean deleteProduct(Long cartId);
 
+	boolean updateCart(Product productDetails, Long quantity);
+
+	ShoppingCart checkout() throws InsufficientQuantityException;
+
 }

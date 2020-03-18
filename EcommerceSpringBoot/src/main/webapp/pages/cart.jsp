@@ -101,6 +101,7 @@
 		<div class="container">
 			<div class="cart_inner">
 				<div class="table-responsive">
+					
 					<c:if test="${empty cart.cartItems}">
 						<div class="alert alert-danger">
 							<strong>Empty Cart!</strong> Add Products to Cart.
@@ -141,20 +142,33 @@
 										</td>
 										<td>
 											<div class="product_count">
+												<form action="updatecart" method="post">
+													<input type="hidden" name="productId"
+														value="${cartItem.product.productId}"> <input
+														type="hidden" name="quantity"
+														value="${cartItem.quantity-1}"> <span
+														class="input-number-decrement"> <i class="ti-minus"
+														onclick="$(this).closest('form').submit()"></i></span>
 
-												<span class="input-number-decrement"> <i
-													class="ti-minus"></i></span><input class="input-number"
-													type="number" value="${cartItem.quantity}" min="0"
-													max="${cartItem.product.quantity}" readonly="readonly">
-												<span class="input-number-increment"> <i
-													class="ti-plus"></i></span>
+												</form>
+												<form action="updatecart" method="post">
+													<input class="input-number" type="number"
+														value="${cartItem.quantity}" min="1"
+														max="${cartItem.product.quantity}" readonly="readonly">
+													<input type="hidden" name="productId"
+														value="${cartItem.product.productId}"> <input
+														type="hidden" name="quantity"
+														value="${cartItem.quantity+1}"> <span
+														class="input-number-increment"> <i class="ti-plus"
+														onclick="$(this).closest('form').submit()"></i></span>
+												</form>
 											</div>
 										</td>
 										<td>
 											<form action="delete" method="post">
 												<span><input type="hidden" name="cartId"
 													value="${cartItem.cartId}"></span> <img
-													src="img/removeproduct.png"
+													src="img/removeproduct.png" alt=""
 													style="margin-left: 12%; cursor: pointer;" width="30px"
 													height="30px" onclick="$(this).closest('form').submit()">
 											</form>
@@ -162,22 +176,7 @@
 									</tr>
 								</c:forEach>
 								<tr class="bottom_button">
-									<td>
-
-
-										<button class="btn_1"
-											onclick="placeOrder(${cart.shoppingCartId},${cart.cartItems},${cart.totalAmount})">UpdateCart</button>
-											<script type="text/javascript">
-										function placeOrder(scid,ci,amount) {
-									        var shoppingCart = {shoppingCartId:scid,cartItems:ci,totalAmount:amount};
-									        var xhr = new XMLHttpRequest();
-									        xhr.open("POST", "http://localhost:8081/updatecart", true);
-									        xhr.setRequestHeader('Content-Type', 'application/json');
-									        xhr.send(JSON.stringify(shoppingCart));
-									    }
-										</script>
-
-									</td>
+									<td></td>
 									<td></td>
 									<td></td>
 								</tr>
@@ -196,9 +195,27 @@
 					</c:if>
 					<div class="checkout_btn_inner float-right">
 						<a class="btn_1" href="/shopbycategory">Continue Shopping</a>
+
 						<c:if test="${!empty cart.cartItems}">
-							<a class="btn_1 checkout_btn_1" href="#">Proceed to checkout</a>
+							<button class="btn_1 checkout_btn_1" type="button"
+								onclick="myFunction()">Checkout</button>
 						</c:if>
+						<div class="alert alert-info" id="myDIV" style="display: none;">
+						<strong>Would you like to checkout?</strong> <br> <a
+							href="/checkout" class="btn_1 checkout_btn_1" class="alert-link">Yes</a>
+						<a href="/viewcart" class="btn_1 checkout_btn_1"
+							class="alert-link">No</a>
+					</div>
+						<script type="text/javascript">
+							function myFunction() {
+								var x = document.getElementById("myDIV");
+								if (x.style.display === "none") {
+									x.style.display = "block";
+								} else {
+									x.style.display = "none";
+								}
+							}
+						</script>
 					</div>
 				</div>
 			</div>

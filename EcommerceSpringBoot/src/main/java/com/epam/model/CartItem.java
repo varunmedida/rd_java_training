@@ -1,5 +1,6 @@
 package com.epam.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,7 +17,7 @@ public class CartItem {
 	private Long cartId;
 	@ManyToOne
 	private Product product;
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.MERGE)
 	private ShoppingCart shoppingCart;
 	@NonNull
 	private Long quantity;

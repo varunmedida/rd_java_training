@@ -12,7 +12,8 @@ public interface CartService {
 
 	boolean deleteProduct(Long cartId);
 
-	ShoppingCart updateProduct(ShoppingCart shoppingCart);
+	boolean updateCart(Long productId, Long quantity) throws InsufficientQuantityException;
 
+	ShoppingCart checkout() throws InsufficientQuantityException;
 	
 }

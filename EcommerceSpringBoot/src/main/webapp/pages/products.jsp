@@ -103,6 +103,9 @@
 							</div>
 							<div class="widgets_inner">
 								<ul class="list">
+								<c:if test="${empty categories}">
+								<p>Coming Soon</p>
+								</c:if>
 									<c:forEach var="category" items="${categories}">
 										<li class="sub-menu"><a href="#"
 											class=" d-flex justify-content-between">
@@ -110,6 +113,9 @@
 												<div class="right ti-plus"></div>
 										</a>
 											<ul>
+											<c:if test="${empty category.subCategories}">
+								<p>Coming Soon</p>
+								</c:if>
 												<c:forEach var="subcategory"
 													items="${category.subCategories}">
 													<form action="/" method="post">
@@ -127,6 +133,9 @@
 				</div>
 				<div class="col-lg-9">
 					<div class="row">
+						<c:if test="${empty products}">
+								<h1 style="margin-left: 30%">Coming Soon</h1>
+								</c:if>
 						<c:forEach var="product" items="${products}">
 							<div class="col-lg-4 col-sm-6">
 							<form action="productdetail" method="post">
@@ -148,9 +157,6 @@
 								</form>
 							</div>
 						</c:forEach>
-						<div class="col-lg-12 text-center">
-							<a href="#" class="btn_2">More Items</a>
-						</div>
 					</div>
 				</div>
 			</div>
