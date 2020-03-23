@@ -11,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.validation.constraints.PositiveOrZero;
 
 import org.springframework.lang.NonNull;
 
@@ -28,7 +27,6 @@ public class Product {
 	@NonNull
 	private Double productPrice;
 	@NonNull
-	@PositiveOrZero
 	private Long quantity;
 	@Lob
 	@JsonIgnore

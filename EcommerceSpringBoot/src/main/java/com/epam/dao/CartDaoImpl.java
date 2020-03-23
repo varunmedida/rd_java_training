@@ -1,8 +1,8 @@
 package com.epam.dao;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import javax.annotation.PostConstruct;
 
@@ -122,7 +122,7 @@ public class CartDaoImpl implements CartDao {
 
 	@Override
 	public ShoppingCart checkout() throws InsufficientQuantityException {
-		Set<CartItem> cartItems = cartItemRepository.findByShoppingCart(shoppingCart);
+		List<CartItem> cartItems = cartItemRepository.findByShoppingCart(shoppingCart);
 		shoppingCart.setCartItems(cartItems);
 		shoppingCart.setTotalAmount();
 		Orders order = new Orders();
@@ -131,13 +131,13 @@ public class CartDaoImpl implements CartDao {
 		updateStockQuantityAfterCheckout(cartItems);
 		ShoppingCart existingShoppingCart = shoppingCart;
 		shoppingCart = new ShoppingCart();
-		Set<CartItem> newCartItems = new HashSet<>(); 
+		List<CartItem> newCartItems = new ArrayList<>(); 
 		shoppingCart.setCartItems(newCartItems);
 		shoppingCartRepository.save(shoppingCart);
 		return existingShoppingCart;
 	}
 
-	private void updateStockQuantityAfterCheckout(Set<CartItem> cartItems) throws InsufficientQuantityException {
+	private void updateStockQuantityAfterCheckout(List<CartItem> cartItems) throws InsufficientQuantityException {
 		for(CartItem cartItem: cartItems) {
 			if(cartItem.getQuantity()<=cartItem.getProduct().getQuantity()) {
 				Product product = productRepository.findByProductId(cartItem.getProduct().getProductId());

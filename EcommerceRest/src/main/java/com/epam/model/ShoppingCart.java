@@ -18,15 +18,16 @@ public class ShoppingCart {
 	@Id
 	private Long shoppingCartId;
 
-	@OneToMany(mappedBy = "shoppingCart",cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "shoppingCart", cascade = CascadeType.ALL)
 	private List<CartItem> cartItems = new ArrayList<>();
-	
+
 	@NonNull
 	private Double totalAmount;
 
 	public ShoppingCart() {
 		setShoppingCartId();
 	}
+
 	public Long getShoppingCartId() {
 		return shoppingCartId;
 	}
@@ -39,19 +40,21 @@ public class ShoppingCart {
 	public List<CartItem> getCartItems() {
 		return cartItems;
 	}
+
 	public void setCartItems(List<CartItem> cartItems) {
 		this.cartItems = cartItems;
 	}
+
 	public Double getTotalAmount() {
 		return totalAmount;
 	}
 
 	public void setTotalAmount() {
 		Double totalAmount = 0.0;
-		for(CartItem cartItem:cartItems) {
-			totalAmount = (cartItem.getQuantity()*cartItem.getProduct().getProductPrice())+totalAmount;
+		for (CartItem cartItem : cartItems) {
+			totalAmount = (cartItem.getQuantity() * cartItem.getProduct().getProductPrice()) + totalAmount;
 		}
 		this.totalAmount = totalAmount;
 	}
-	
+
 }

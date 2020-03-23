@@ -152,7 +152,7 @@
 
 												</form>
 												<form action="updatecart" method="post">
-													<input class="input-number" type="number"
+													<input class="input-number" type="text"
 														value="${cartItem.quantity}" min="1"
 														max="${cartItem.product.quantity}" readonly="readonly">
 													<input type="hidden" name="productId"

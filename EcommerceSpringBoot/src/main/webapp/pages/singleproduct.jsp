@@ -100,7 +100,7 @@
 						<div id="vertical">
 							<div data-thumb="img/product_details/prodect_details_1.png">
 								<img src="getProductPhoto/${product.productId}"
-									style="border: 1px solid black" />
+								 />
 							</div>
 						</div>
 					</div>
@@ -116,15 +116,15 @@
 						</ul>
 						${addedToCart}
 						<div class="card_area">
-						<c:if test="${product.quantity ==0}">
+						<c:if test="${product.quantity <=0}">
 						<div class='alert alert-danger'>Out of Stock</div>
 						</c:if>
-						<c:if test="${product.quantity !=0}">
+						<c:if test="${product.quantity >0}">
 
 							<form action="addtocart" method="post">
 								<div class="product_count d-inline-block">
 									<span class="inumber-decrement"> <i class="ti-minus"></i></span>
-									<input class="input-number" type="number" value="1" min="1"
+									<input class="input-number" type="text" value="1" min="1"
 										name="quantity" max="${product.quantity}" readonly="readonly"> <span
 										class="number-increment"> <i class="ti-plus"></i></span>
 								</div>
