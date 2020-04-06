@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.lang.NonNull;
 
@@ -20,11 +21,12 @@ public class SubCategory {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long subCategoryId;
-	@NonNull
+	@NotNull
 	private String subCategoryName;
 	@NonNull
 	@ManyToOne
 	@JsonIgnore
+	@NotNull
 	private Category category;
 	@OneToMany(mappedBy = "subCategory")
 	@JsonIgnore
