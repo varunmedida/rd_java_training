@@ -1,9 +1,13 @@
 package com.epam.mvccontroller;
 
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.logging.log4j.LogManager;
@@ -41,6 +45,12 @@ public class MvcProductController {
 		try {
 			LOGGER.info("----Get Product Details----");
 			bytes = productService.getPhotoById(productId);
+			if(bytes==null) {
+				 BufferedImage bImage = ImageIO.read(new File("D:\\noimg.jpg"));
+			      ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			      ImageIO.write(bImage, "jpg", bos);
+			      bytes = bos.toByteArray();
+			}
 			InputStream inputStream = new ByteArrayInputStream(bytes);
 			IOUtils.copy(inputStream, response.getOutputStream());
 		} catch (IOException exception) {

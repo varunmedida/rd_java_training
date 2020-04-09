@@ -11,8 +11,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
-import org.springframework.lang.NonNull;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -23,10 +21,8 @@ public class SubCategory {
 	private Long subCategoryId;
 	@NotNull
 	private String subCategoryName;
-	@NonNull
 	@ManyToOne
 	@JsonIgnore
-	@NotNull
 	private Category category;
 	@OneToMany(mappedBy = "subCategory")
 	@JsonIgnore

@@ -3,6 +3,7 @@ package com.epam.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,8 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import org.springframework.lang.NonNull;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Category {
@@ -21,8 +20,7 @@ public class Category {
 	private Long categoryId;
 	@NonNull
 	private String categoryName;
-	@OneToMany(mappedBy = "category")
-	@JsonIgnore
+	@OneToMany(mappedBy = "category",cascade = CascadeType.REMOVE)
 	private List<SubCategory> subCategories = new ArrayList<>();
 	public Long getCategoryId() {
 		return categoryId;

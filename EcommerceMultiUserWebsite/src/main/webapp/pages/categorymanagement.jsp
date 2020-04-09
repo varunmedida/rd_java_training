@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
@@ -53,8 +53,8 @@
 			<div class="row align-items-center justify-content-center">
 				<div class="col-lg-11">
 					<nav class="navbar navbar-expand-lg navbar-light">
-						<a class="navbar-brand" href="/admin"> <img src="img/logo.png"
-							alt="logo">
+						<a class="navbar-brand" href="/admin"> <img
+							src="${pageContext.request.contextPath}/img/logo.png" alt="logo">
 						</a>
 						<button class="navbar-toggler" type="button"
 							data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -80,8 +80,6 @@
 											Management </a> <a class="dropdown-item"
 											href="/admin/productmanagement">Product Management </a>
 									</div></li>
-
-							</ul>
 						</div>
 
 						<div class="dropdown">
@@ -110,7 +108,7 @@
 				<div class="col-lg-12">
 					<div class="breadcrumb_iner">
 						<div class="breadcrumb_iner_item">
-							<p>Admin</p>
+							<p>Admin / Category Management</p>
 						</div>
 					</div>
 				</div>
@@ -118,6 +116,66 @@
 		</div>
 	</section>
 	<!-- breadcrumb start-->
+	<section class="new_arrival section_padding">
+		<div class="container" style="margin-top: -5%">
+			<script>
+				function myFunction() {
+					var table = document.getElementById("myTable");
+					var row = table.insertRow(-1);
+					var cell1 = row.insertCell(0);
+					cell1.innerHTML = "<form class='form-inline' action='addcategory' method='post'><input class='form-control col-sm-4' type='text' name='categoryName' required><button class='btn btn-primary' onclick='$(this).closest('form').submit()'>Add</button></form>";
+				}
+			</script>
+
+
+			<div class="arrival_tittle">
+				<h3>Catalog Management</h3>
+			</div>
+			<button type="button" class="btn btn-primary col-sm-2"
+				onclick="myFunction()">Add Category</button>
+			<br>
+			<div class="container">
+				<div class="col-lg-12">
+					<table class="table" id="myTable">
+						<thead>
+							<tr>
+								<th scope="col">Category Name</th>
+								<th scope="col"></th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach var="category" items="${categories}">
+								<tr>
+									<td>
+										<form class="form-inline" action="updatecategory"
+											method="post">
+
+											<input type="hidden" name="categoryId"
+												value="${category.categoryId}"> <input type="text"
+												class="form-control col-sm-4" name="categoryName"
+												value="${category.categoryName}"> &nbsp;&nbsp;
+											<button class="btn btn-primary"
+												onclick="$(this).closest('form').submit()">Update
+												Category</button>
+										</form>
+									</td>
+									<td><form action="deletecategory" method="post">
+											<input type="hidden" name="categoryId"
+												value="${category.categoryId}">
+											<button class="btn btn-primary"
+												onclick="$(this).closest('form').submit()">Delete
+												Category</button>
+										</form></td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+		</div>
+	</section>
+
 
 
 	<!-- jquery plugins here-->

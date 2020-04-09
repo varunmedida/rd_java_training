@@ -15,4 +15,8 @@ public interface AdminCatalogService {
 
 	SubCategory addSubCategoryBasedOnCategory(Long categoryId, @Valid SubCategory subCategory);
 
+	SubCategory updateSubCategory(Long subCategoryId, @Valid SubCategory subCategory);
+
+	SubCategory deleteSubCategory(Long subCategoryId);
+
 }

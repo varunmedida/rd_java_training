@@ -53,8 +53,8 @@
 			<div class="row align-items-center justify-content-center">
 				<div class="col-lg-11">
 					<nav class="navbar navbar-expand-lg navbar-light">
-						<a class="navbar-brand" href="/admin"> <img src="img/logo.png"
-							alt="logo">
+						<a class="navbar-brand" href="/admin"> <img
+							src="${pageContext.request.contextPath}/img/logo.png" alt="logo">
 						</a>
 						<button class="navbar-toggler" type="button"
 							data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -110,7 +110,7 @@
 				<div class="col-lg-12">
 					<div class="breadcrumb_iner">
 						<div class="breadcrumb_iner_item">
-							<p>Admin</p>
+							<p>Admin / Product Management</p>
 						</div>
 					</div>
 				</div>
@@ -118,7 +118,73 @@
 		</div>
 	</section>
 	<!-- breadcrumb start-->
+	<section class="new_arrival section_padding">
+		<div class="container" style="margin-top: -5%">
+			<div class="arrival_tittle">
+				<h3>Product Management</h3>
+			</div>
+			<div class="container">
+				<div class="col-lg-12">
+					<ul class="list">
 
+						<c:forEach var="category" items="${categories}">
+							<c:forEach var="subcategory" items="${category.subCategories}">
+								<li class="sub-menu"><a href="#"
+									class=" d-flex justify-content-between">
+										${subcategory.subCategoryName}
+										<div class="right ti-plus"></div>
+								</a></li>
+
+								<ul>
+									<table class="table" id="subCategoryTable">
+										<thead>
+											<tr>
+												<th scope="col">Subcategory Name</th>
+												<th scope="col"></th>
+											</tr>
+										</thead>
+										<tbody>
+											<c:forEach var="subcategory"
+												items="${category.subCategories}">
+												<tr>
+													<td>
+														<form class="form-inline" action="updatesubcategory"
+															method="post">
+
+															<input type="hidden" name="subCategoryId"
+																value="${subcategory.subCategoryId}"> <input
+																type="text" class="form-control col-sm-4"
+																name="subCategoryName"
+																value="${subcategory.subCategoryName}">
+															<button class="btn btn-primary"
+																onclick="$(this).closest('form').submit()">Update
+																SubCategory</button>
+														</form>
+													</td>
+													<td><form action="deletesubcategory" method="post">
+															<input type="hidden" name="subCategoryId"
+																value="${subcategory.subCategoryId}">
+															<button class="btn btn-primary"
+																onclick="$(this).closest('form').submit()">Delete
+																Category</button>
+														</form></td>
+
+												</tr>
+
+											</c:forEach>
+											<tr>
+												<button type="button" class="btn btn-primary col-sm-2"
+													onclick="ShowHideDiv(${subcategory.subcategoryId})">Add
+													Product</button>
+											</tr>
+										</tbody>
+									</table>
+								</ul>
+							</c:forEach>
+						</c:forEach>
+					</ul>
+				</div>
+	</section>
 
 	<!-- jquery plugins here-->
 	<!-- jquery -->

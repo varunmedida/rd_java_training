@@ -1,6 +1,5 @@
 package com.epam.controller;
 
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -15,16 +14,14 @@ import com.epam.exception.InsufficientQuantityException;
 public class EcommerceServiceError extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler({ DataNotFoundException.class})
-	public ResponseEntity<Object> handleDataNotFoundException(DataNotFoundException exception, HttpHeaders headers,
-			HttpStatus status) {
+	public ResponseEntity<Object> handleDataNotFoundException(DataNotFoundException exception) {
 		EcommerceApiError error = new EcommerceApiError(HttpStatus.NOT_FOUND, exception.getMessage());
-		return new ResponseEntity<>(error, new HttpHeaders(), error.getStatus());
+		return new ResponseEntity<>(error,error.getStatus());
 	}
 	
 	@ExceptionHandler({ InsufficientQuantityException.class})
-	public ResponseEntity<Object> handleInsufficientQuantityException(InsufficientQuantityException exception, HttpHeaders headers,
-			HttpStatus status) {
+	public ResponseEntity<Object> handleInsufficientQuantityException(InsufficientQuantityException exception) {
 		EcommerceApiError error = new EcommerceApiError(HttpStatus.BAD_REQUEST, exception.getMessage());
-		return new ResponseEntity<>(error, new HttpHeaders(), error.getStatus());
+		return new ResponseEntity<>(error, error.getStatus());
 	}
 }

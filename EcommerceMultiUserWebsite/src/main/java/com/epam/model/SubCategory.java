@@ -3,6 +3,7 @@ package com.epam.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,8 +27,7 @@ public class SubCategory {
 	@ManyToOne
 	@JsonIgnore
 	private Category category;
-	@OneToMany(mappedBy = "subCategory")
-	@JsonIgnore
+	@OneToMany(mappedBy = "subCategory", cascade = CascadeType.REMOVE)
 	private List<Product> products = new ArrayList<>();
 	public Long getSubCategoryId() {
 		return subCategoryId;

@@ -24,6 +24,7 @@ public class AdminCatalogServiceImpl implements AdminCatalogService {
 	@Autowired
 	SubCategoryRepository subCategoryRepository;
 	
+	
 	@Override
 	public Category addCategory(@Valid Category category) {
 		log.info("Add Category Service");
@@ -47,9 +48,26 @@ public class AdminCatalogServiceImpl implements AdminCatalogService {
 	}
 
 	@Override
-	public SubCategory addSubCategoryBasedOnCategory(Long categoryId, @Valid SubCategory subCategory) {
+	public SubCategory addSubCategoryBasedOnCategory(Long categoryId,SubCategory subCategory) {
 		log.info("Add subcategory to categoryId service:{}", categoryId);
 		subCategory.setCategory(categoryRepository.findById(categoryId).orElseThrow(()-> new DataNotFoundException("Category Not found to Delete")));
 		return subCategoryRepository.save(subCategory);
+	}
+
+	@Override
+	public SubCategory updateSubCategory(Long subCategoryId, @Valid SubCategory subCategory) {
+		log.info("Update SubCategory by Id Service:{}", subCategoryId);
+		SubCategory existingSubCategory = subCategoryRepository.findById(subCategoryId).orElseThrow(()-> new DataNotFoundException("SubCategory Not found to Update"));
+		existingSubCategory.setSubCategoryName(subCategory.getSubCategoryName());
+		existingSubCategory.setCategory(subCategory.getCategory());
+		return subCategoryRepository.save(existingSubCategory);
+	}
+
+	@Override
+	public SubCategory deleteSubCategory(Long subCategoryId) {
+		log.info("Delete SubCategory by Id Service:{}", subCategoryId);
+		SubCategory existingSubCategory =subCategoryRepository.findById(subCategoryId).orElseThrow(()-> new DataNotFoundException("SubCategory Not found to Delete")); 
+		subCategoryRepository.delete(existingSubCategory);
+		return existingSubCategory;
 	}
 }

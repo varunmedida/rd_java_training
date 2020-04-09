@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html;"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!doctype html>
 <html>
 
@@ -175,7 +176,7 @@
 											</form>
 										</td>
 										<td>
-										<h5>Rs. ${cartItem.product.productPrice*cartItem.quantity}/-</h5>
+										<h5>Rs. <fmt:formatNumber type="number" maxFractionDigits="2" value="${cartItem.product.productPrice*cartItem.quantity}"/>/-</h5>
 										</td>
 									</tr>
 								</c:forEach>

@@ -157,12 +157,12 @@
 											<h5>Rs. ${cartItem.product.productPrice}/-</h5>
 										</td>
 										<td>
-										<c:if test="${cartItem.product.productId >=cartItem.quantity}">
+										<c:if test="${cartItem.product.quantity <cartItem.quantity}">
 										<div class="product_count alert alert-danger">
 										Out of Stock.
 										</div>
 										</c:if>
-										<c:if test="${cartItem.product.productId <cartItem.quantity}">
+										<c:if test="${cartItem.product.quantity >=cartItem.quantity}">
 											<div class="product_count">
 												<form action="updatecart" method="post">
 													<input type="hidden" name="productId"

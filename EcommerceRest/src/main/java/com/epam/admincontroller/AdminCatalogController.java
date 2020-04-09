@@ -32,7 +32,7 @@ public class AdminCatalogController {
 	
 	@PostMapping
 	public ResponseEntity<Category> addCategory(@RequestBody @Valid Category category) {
-		log.info("Add Product");
+		log.info("Add Category");
 		final URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(category)
 				.toUri();
 		return ResponseEntity.created(uri).body(adminCatalogService.addCategory(category));
@@ -57,4 +57,19 @@ public class AdminCatalogController {
 				.toUri();
 		return ResponseEntity.created(uri).body(adminCatalogService.addSubCategoryBasedOnCategory(categoryId,subCategory));
 	}
+	
+	@PutMapping("/subcategories/{subCategoryId}")
+	public ResponseEntity<SubCategory> updateSubCategory(@PathVariable Long subCategoryId,@RequestBody
+			@Valid SubCategory subCategory){
+		log.info("Update SubCategory by Id:{}", subCategoryId);
+		return ResponseEntity.accepted().body(adminCatalogService.updateSubCategory(subCategoryId,subCategory));
+	}
+	
+	@DeleteMapping("/subcategories/{subCategoryId}")
+	public ResponseEntity<SubCategory> deleteSubCategory(@PathVariable Long subCategoryId){
+		log.info("Delete SubCategory by Id:{}", subCategoryId);
+		return ResponseEntity.accepted().body(adminCatalogService.deleteSubCategory(subCategoryId));
+	}
+	
+	
 }

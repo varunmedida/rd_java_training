@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
@@ -53,8 +53,8 @@
 			<div class="row align-items-center justify-content-center">
 				<div class="col-lg-11">
 					<nav class="navbar navbar-expand-lg navbar-light">
-						<a class="navbar-brand" href="/admin"> <img src="img/logo.png"
-							alt="logo">
+						<a class="navbar-brand" href="/admin"> <img
+							src="${pageContext.request.contextPath}/img/logo.png" alt="logo">
 						</a>
 						<button class="navbar-toggler" type="button"
 							data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -80,8 +80,6 @@
 											Management </a> <a class="dropdown-item"
 											href="/admin/productmanagement">Product Management </a>
 									</div></li>
-
-							</ul>
 						</div>
 
 						<div class="dropdown">
@@ -110,7 +108,7 @@
 				<div class="col-lg-12">
 					<div class="breadcrumb_iner">
 						<div class="breadcrumb_iner_item">
-							<p>Admin</p>
+							<p>Admin / Subcategory Management</p>
 						</div>
 					</div>
 				</div>
@@ -118,6 +116,105 @@
 		</div>
 	</section>
 	<!-- breadcrumb start-->
+	<section class="new_arrival section_padding">
+		<div class="container" style="margin-top: -5%">
+
+
+			<div class="arrival_tittle">
+				<h3>Subcategory Management</h3>
+			</div>
+
+			<br>
+			<div class="container">
+				<div class="col-lg-12">
+					<ul class="list">
+
+						<c:forEach var="category" items="${categories}">
+
+							<li class="sub-menu"><a href="#"
+								class=" d-flex justify-content-between">
+									${category.categoryName}
+									<div class="right ti-plus"></div>
+							</a>
+								<ul>
+
+									<script>
+										function subcategory(categoryId) {
+											var table = document
+													.getElementById("subCategoryTable");
+											var row = table.insertRow(-1);
+											var cell1 = row.insertCell(0);
+											cell1.innerHTML = "<form class='form-inline' action='addsubcategory' method='post'><input type='hidden' value="+categoryId+" name='categoryId'><input class='form-control col-sm-4' type='text' name='subCategoryName' required><button class='btn btn-primary' onclick='$(this).closest('form').submit()'>Add</button></form>";
+										}
+									</script>
+
+									<table class="table" id="subCategoryTable">
+										<thead>
+											<tr>
+												<th scope="col">Subcategory Name</th>
+												<th scope="col"></th>
+											</tr>
+										</thead>
+										<tbody>
+											<c:forEach var="subcategory"
+												items="${category.subCategories}">
+												<tr>
+													<td>
+														<form class="form-inline" action="updatesubcategory"
+															method="post">
+
+															<input type="hidden" name="subCategoryId"
+																value="${subcategory.subCategoryId}"> <input
+																type="text" class="form-control col-sm-4"
+																name="subCategoryName"
+																value="${subcategory.subCategoryName}">
+															<button class="btn btn-primary"
+																onclick="$(this).closest('form').submit()">Update
+																SubCategory</button>
+														</form>
+													</td>
+													<td><form action="deletesubcategory" method="post">
+															<input type="hidden" name="subCategoryId"
+																value="${subcategory.subCategoryId}">
+															<button class="btn btn-primary"
+																onclick="$(this).closest('form').submit()">Delete
+																Category</button>
+														</form></td>
+
+												</tr>
+
+											</c:forEach>
+											<tr>
+												<button type="button" class="btn btn-primary col-sm-2"
+													onclick="ShowHideDiv(${category.categoryId})">Add
+													SubCategory</button>
+											</tr>
+										</tbody>
+									</table>
+								</ul></li>
+
+						</c:forEach>
+					</ul>
+				</div>
+			</div>
+			<div id="dvPassport" style="display: none">
+				<form class="form-inline" action="addsubcategory" method="post">
+					<input type="hidden" name="categoryId" id="categoryId"><input
+						class="form-control col-sm-4" type="text" name="subCategoryName"
+						required>
+					<button class="btn btn-primary"
+						onclick="$(this).closest('form').submit()">Add</button>
+				</form>
+			</div>
+			<script type="text/javascript">
+    function ShowHideDiv(categoryId) {
+        document.getElementById('categoryId').value=categoryId;
+    	 document.getElementById('dvPassport').style.display = "block";
+    }
+</script>
+		</div>
+	</section>
+
 
 
 	<!-- jquery plugins here-->
